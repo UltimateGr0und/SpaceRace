@@ -62,30 +62,22 @@ namespace SpaceRace
         }
         public void cnahgeDir(body obj, double SpaceConst)
         {
-            //double tempX, tempY, num;
-            //tempX =  (obj.mass * SpaceConst) / ((obj.posX - posx)*this.Mass);
-            //tempY = (obj.mass * SpaceConst) / ((obj.posY - posY) * this.Mass);
-
-            //num = tempX >= 0 ? 1 : -1;
-            //posx += num * Math.Sqrt(Math.Abs(tempX));
-            //num = tempY >= 0 ? 1 : -1;
-            //posy += num * Math.Sqrt(Math.Abs(tempY));
-            double num, tempY=0, tempX=0, temp;
-            num = Math.Sqrt(Math.Pow(obj.posX - this.posx, 2) + Math.Pow(obj.posY - this.posy, 2));
-            num = (obj.mass * SpaceConst) / (num * this.Mass);
+            double F=0, tempY=0, tempX=0, temp=0, S=0;
+            S = Math.Sqrt(Math.Pow(obj.posX - this.posx, 2) + Math.Pow(obj.posY - this.posy, 2));
+            F = (obj.mass * SpaceConst) / (S * this.Mass);
             if (posx == 0)
             {
-                tempY = num;
+                tempY = F;
             }
             else if (posy == 0)
             {
-                tempX = num;
+                tempX = F;
             }
             else
             {
                 temp = (obj.posX - this.posx) + (obj.posY - this.posy);
-                tempX = Math.Abs(num * ((obj.posX - this.posx)/temp));
-                tempY = Math.Abs(num * (temp/ (obj.posY - this.posy)/temp));
+                tempX = Math.Abs(F * ((obj.posX - this.posx)/temp));
+                tempY = Math.Abs(F * (temp/ (obj.posY - this.posy)/temp));
             }
             vecX += (posx>0?-tempX:tempX);
             vecY += (posy>0?-tempY:tempY);
@@ -155,7 +147,6 @@ namespace SpaceRace
     }
     class ship : body
     {
-        private double speed = 1;
         public bool destroyed { get; set; } = false;
         public new void show()
         {
